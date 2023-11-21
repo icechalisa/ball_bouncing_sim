@@ -34,6 +34,21 @@ class Ball:
         turtle.end_fill()
 
 
+class Ballsimulator:
+    def __init__(self, canvas_width, canvas_height, ball_radius, num_balls):
+        self.canvas_width = canvas_width
+        self.canvas_height = canvas_height
+        self.balls = [Ball(canvas_width, canvas_height, ball_radius) for _ in range(num_balls)]
+
+    def update_balls(self):
+        for ball in self.balls:
+            ball.move_circle(self.canvas_width, self.canvas_height)
+
+    def draw_balls(self):
+        for ball in self.balls:
+            ball.draw()
+
+
 num_balls = int(input("Number of balls to simulate: "))
 turtle.speed(0)
 turtle.tracer(0)
@@ -41,3 +56,11 @@ turtle.hideturtle()
 canvas_width, canvas_height = turtle.screensize()
 ball_radius = 0.05 * canvas_width
 turtle.colormode(255)
+
+simulator = Ballsimulator(canvas_width, canvas_height, ball_radius, num_balls)
+
+while True:
+    turtle.clear()
+    simulator.update_balls()
+    simulator.draw_balls()
+    turtle.update()
